@@ -1,0 +1,23 @@
+#message{
+    border-radius: 25px;
+    border: 1px solid gray;
+    padding: 10px 10px 10px;
+}
+#sndMsg{
+    padding: 20px 5px;
+    text-align: -webkit-center;
+}
+.msg-list{
+    height: 365px;
+    overflow: auto;
+}
+.chat-display{
+}
+.received-msg{
+    position: inherit;
+}
+.chat-input{
+    position: fixed;
+    width: 100%;
+    background: white;
+}
