@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonItem, IonTextarea, IonRow, IonCol, IonFabButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonTextarea, IonRow, IonCol, IonFabButton } from '@ionic/react';
 
 import './Chat.css';
 
 
 const Chat: React.FC = () => {
   const [text, setText] = useState<any>();
+  const msgRef = useRef<any>();
+  const msgWritten = useRef<any>();
   
   let messages = [
     {
@@ -188,11 +190,11 @@ const Chat: React.FC = () => {
   ];
   
   const currentUser = "User 1"
-  
+
   const msgLst = messages.map((arr, i) => {
     if(currentUser !== messages[i].user){
         return(
-          <IonRow id={i.toString()} className="received-msg">
+          <IonRow key={i.toString()} className="received-msg">
             <IonCol size="8">
               <span> {messages[i].msg} </span>
             </IonCol>
@@ -200,7 +202,7 @@ const Chat: React.FC = () => {
         )
     }else{
       return(
-        <IonRow className="received-msg">
+        <IonRow key={i.toString()} className="received-msg">
           <IonCol offset="6" size="8">
             <span> {messages[i].msg} </span>
           </IonCol>
@@ -208,18 +210,17 @@ const Chat: React.FC = () => {
       )
     }    
   })
-
+  
   function sendMessage(txt:string){
     var newMsg = '<IonRow className="received-msg">'+
                     '<IonCol size="8">'+
                       '<span> '+ txt +' </span>'+
                     '</IonCol>'+
                   '</IonRow><br><br>'
-
-    var elm = document.getElementById("new-msg");
-    setText("")
-    elm?.insertAdjacentHTML('beforeend', newMsg);
-    elm?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    
+    msgRef.current.insertAdjacentHTML('beforeend', newMsg);
+    msgRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    msgWritten.current.value = "";
   }
 
   return (
@@ -237,7 +238,7 @@ const Chat: React.FC = () => {
         </IonHeader>
         <IonGrid className="chat-display">
           <IonRow className="msg-list">
-            <IonCol id="new-msg" size="10">
+            <IonCol ref={msgRef} id="new-msg" size="10">
                 {msgLst}
             </IonCol>
           </IonRow>
@@ -245,7 +246,7 @@ const Chat: React.FC = () => {
         <IonGrid className="chat-input">
           <IonRow>
             <IonCol size="10">
-              <IonTextarea id="message" value={text} onIonChange={e => setText(e.detail.value!)}></IonTextarea>
+              <IonTextarea ref={msgWritten} id="message" value={text} onIonChange={e => setText(e.detail.value!)}></IonTextarea>
             </IonCol>
             <IonCol id="sndMsg" size="2" text-center>
               <IonFabButton color="tertiary" onClick={() => {sendMessage(text)}}>Send</IonFabButton>

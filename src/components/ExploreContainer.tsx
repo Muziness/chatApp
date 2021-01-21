@@ -1,7 +1,7 @@
 import React from 'react';
 import './ExploreContainer.css';
 import { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonTextarea, IonItem, IonLabel, IonItemDivider, IonList } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonTextarea, IonItem, IonItemDivider, IonList } from '@ionic/react';
 
 interface ContainerProps {
   name: string;
